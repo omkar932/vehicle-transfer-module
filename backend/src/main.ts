@@ -4,8 +4,8 @@ import * as dotenv from 'dotenv';
 import 'reflect-metadata';
 
 async function bootstrap() {
-  dotenv.config();
+  const env = dotenv.config().parsed;
   const app = await NestFactory.create(AppModule);
-  await app.listen(4000);
+  await app.listen(env.PORT);
 }
 bootstrap();

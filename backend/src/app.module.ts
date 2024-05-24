@@ -4,22 +4,27 @@ import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModule } from './module/user/user.module';
 import { VehicleModule } from './module/vehicle/vehicle.module';
-
+import * as dotenv from 'dotenv';
+import { User } from './module/user/entity/user.entity';
+import { Vehicle } from './module/vehicle/entity/vehicle.entity';
+import { TransferModule } from './module/transfer/transfer.module';
+const env = dotenv.config().parsed;
 @Module({
   imports: [
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: 'localhost',
-      port: 3306, // Default MySQL port
-      username: 'root',
-      password: 'root',
-      database: 'vehicle_transfer_module',
-      entities: [],
-      synchronize: true, // Auto create database schema
+      host: env.DB_HOST,
+      port: +env.DB_PORT,
+      username: env.DB_USER,
+      password: env.DB_PASSWORD,
+      database: env.DB_NAME,
+      entities: [User, Vehicle],
+      synchronize: JSON.parse('true'), // Auto create database schema
     }),
-    TypeOrmModule.forFeature([]),
+    TypeOrmModule.forFeature([User, Vehicle]),
     UserModule,
     VehicleModule,
+    TransferModule,
   ],
 
   controllers: [AppController],
