@@ -8,6 +8,7 @@ import * as dotenv from 'dotenv';
 import { User } from './module/user/entity/user.entity';
 import { Vehicle } from './module/vehicle/entity/vehicle.entity';
 import { TransferModule } from './module/transfer/transfer.module';
+import { TransferHistory } from './module/transfer/entity/transfer.entity';
 const env = dotenv.config().parsed;
 @Module({
   imports: [
@@ -18,10 +19,10 @@ const env = dotenv.config().parsed;
       username: env.DB_USER,
       password: env.DB_PASSWORD,
       database: env.DB_NAME,
-      entities: [User, Vehicle],
+      entities: [User, Vehicle, TransferHistory],
       synchronize: JSON.parse('true'), // Auto create database schema
     }),
-    TypeOrmModule.forFeature([User, Vehicle]),
+    TypeOrmModule.forFeature([User, Vehicle, TransferHistory]),
     UserModule,
     VehicleModule,
     TransferModule,

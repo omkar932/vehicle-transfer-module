@@ -1,6 +1,4 @@
 // src/entities/vehicle.entity.ts
-import { Base } from '../../../common/entity/common.entity';
-import { User } from '../../user/entity/user.entity';
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -8,6 +6,10 @@ import {
   ManyToOne,
   OneToMany,
 } from 'typeorm';
+import { Base } from '../../../common/entity/common.entity';
+import { User } from '../../user/entity/user.entity';
+import { TransferHistory } from '../../transfer/entity/transfer.entity';
+
 @Entity()
 export class Vehicle extends Base {
   @PrimaryGeneratedColumn()
@@ -27,4 +29,10 @@ export class Vehicle extends Base {
 
   @ManyToOne(() => User, (user) => user.vehicles, { nullable: true })
   user: User;
+
+  @OneToMany(
+    () => TransferHistory,
+    (transferHistory) => transferHistory.vehicle,
+  )
+  transferHistories: TransferHistory[];
 }
