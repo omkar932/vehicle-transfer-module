@@ -11,6 +11,9 @@ import {
 async function bootstrap() {
   const env = dotenv.config().parsed;
   const app = await NestFactory.create(AppModule);
+  app.enableCors({
+    origin: ['http://localhost:3000'],
+  });
   app.useGlobalFilters(new HttpExceptionFilter());
   app.useGlobalInterceptors(new TransformInterceptor());
   app.useGlobalPipes(new ValidationPipe());
