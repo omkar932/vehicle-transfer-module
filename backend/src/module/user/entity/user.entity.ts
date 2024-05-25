@@ -12,7 +12,7 @@ export class User extends Base {
   @Column()
   name: string;
 
-  @Column()
+  @Column({ unique: true })
   phoneNumber: string;
 
   @Column({ nullable: true })

@@ -20,7 +20,7 @@ const env = dotenv.config().parsed;
       password: env.DB_PASSWORD,
       database: env.DB_NAME,
       entities: [User, Vehicle, TransferHistory],
-      synchronize: JSON.parse('true'), // Auto create database schema
+      synchronize: JSON.parse('true'),
     }),
     TypeOrmModule.forFeature([User, Vehicle, TransferHistory]),
     UserModule,
