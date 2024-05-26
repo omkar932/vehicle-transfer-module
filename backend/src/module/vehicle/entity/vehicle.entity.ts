@@ -15,7 +15,7 @@ export class Vehicle extends Base {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ unique: true })
   vehicleNumber: string;
 
   @Column()

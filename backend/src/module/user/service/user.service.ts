@@ -8,21 +8,33 @@ import { UserConstants } from 'src/common/constants.common';
 export class UserService {
   constructor(private readonly userRepository: UserRepository) {}
 
-  async findAll(): Promise<User[]> {
-    return this.userRepository.findAll();
+  async findAll(): Promise<any> {
+    const data = await this.userRepository.findAll();
+    return {
+      data,
+      message: UserConstants.UserFetchSuccessfully,
+    };
   }
 
-  async findWithMobileNumber(phoneNumberDto: PhoneNumberDto): Promise<User> {
-    return this.userRepository.findWithMobileNumber(phoneNumberDto.phoneNumber);
+  async findWithMobileNumber(phoneNumberDto: PhoneNumberDto): Promise<any> {
+    const data = await this.userRepository.findWithMobileNumber(
+      phoneNumberDto.phoneNumber,
+    );
+    if (!data) return false;
+    return {
+      data,
+      message: UserConstants.UserFetchSuccessfully,
+    };
   }
 
-  async create(createUserDto: CreateUserDto): Promise<User[]> {
+  async create(createUserDto: CreateUserDto): Promise<any> {
     const findUserExist = await this.findWithMobileNumber({
       phoneNumber: createUserDto.phoneNumber,
     });
-    if (findUserExist)
+    console.log(findUserExist);
+    if (findUserExist?.data)
       throw new BadRequestException(UserConstants.UserAlreadyExist);
     const user = await this.userRepository.createNew(createUserDto);
-    return user;
+    return { user, message: UserConstants.UserCreatedSuccessFully };
   }
 }

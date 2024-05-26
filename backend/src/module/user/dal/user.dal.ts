@@ -9,9 +9,8 @@ export class UserRepository {
   async findAll() {
     return await this.userRepository.find();
   }
-  createNew(payload) {
-    const user = this.userRepository.create(payload);
-    return this.userRepository.save(user);
+  async createNew(payload) {
+    return await this.userRepository.create(payload);
   }
   async findWithMobileNumber(phoneNumber: string): Promise<User> {
     return await this.userRepository.findOneBy({ phoneNumber });
